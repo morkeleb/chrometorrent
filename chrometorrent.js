@@ -4,12 +4,16 @@
 
 // A generic onclick callback function.
 var token = "tt";
+
+$.get(localStorage["host"] + "token.html", function(data){
+token = $(data).first().first().html();});
+
 function createTorrentUrl(info) {
 	return localStorage["host"] + "?token=" + token + "&action=add-url&s=" + escape(info.linkUrl);
 }
 
 function download(info, tab) {
-  alert(createTorrentUrl(info));
+  $.get(createTorrentUrl(info));
   console.log("item " + info.linkUrl + " was clicked");
 }
 

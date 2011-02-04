@@ -2,7 +2,7 @@
   "name": "ChromeTorrent",
   "description": "Adds a context menu option for downloading a torrent file with utorrent linux server",
   "version": "0.1",
-  "permissions": ["contextMenus"],
+  "permissions": ["contextMenus", "http://*/", "https://*/"],
   "background_page": "background.html",
   "options_page": "options.html"
 }
