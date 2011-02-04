@@ -3,7 +3,13 @@
 // found in the LICENSE file.
 
 // A generic onclick callback function.
+var token = "tt";
+function createTorrentUrl(info) {
+	return localStorage["host"] + "?token=" + token + "&action=add-url&s=" + escape(info.linkUrl);
+}
+
 function download(info, tab) {
+  alert(createTorrentUrl(info));
   console.log("item " + info.linkUrl + " was clicked");
 }
 

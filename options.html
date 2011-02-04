@@ -1,0 +1,59 @@
+<html>
+	<head>
+		<title>ChromeTorrent - options</title>
+	</head>
+
+<script type="text/javascript">
+
+// Saves options to localStorage.
+function save_options() {
+  var host = document.getElementById("host").value;
+  var user = document.getElementById("user").value;
+  var pass = document.getElementById("password").value;
+
+  localStorage["host"] = host;
+  localStorage["user"] = user;
+  localStorage["pass"] = pass;
+  document.getElementById("status").innerHTML = "saved";
+}
+
+// Restores select box state to saved value from localStorage.
+function restore_options() {
+  var host = localStorage["host"];
+  var user = localStorage["user"];
+  var pass = localStorage["pass"];
+  
+  document.getElementById("host").value = host;
+  document.getElementById("user").value = user;
+  document.getElementById("password").value = pass;
+}
+
+</script>
+
+<body onload="restore_options()">
+
+	<h1>
+		Welcome To ChromeTorrent
+	</h1>
+	<p>Please specify the options to connect to your uTorrent web-gui.</p>
+	<table>
+		<tr>
+			<td>Host</td>
+			<td><input type="text" id="host"/></td>
+		</tr>
+		<tr>
+			<td>User</td>
+			<td><input type="text" id="user"/></td>
+		</tr>
+		<tr>
+			<td>Password</td>
+			<td><input type="password" id="password"/></td>
+		</tr>
+	</table>
+
+<button onclick="save_options()">Save</button>
+<div id="status"></div>
+
+
+</html>
+			
