@@ -3,14 +3,12 @@
 // found in the LICENSE file.
 
 // A generic onclick callback function.
-function genericOnClick(info, tab) {
-  console.log("item " + info.menuItemId + " was clicked");
-  console.log("info: " + JSON.stringify(info));
-  console.log("tab: " + JSON.stringify(tab));
+function download(info, tab) {
+  console.log("item " + info.linkUrl + " was clicked");
 }
 
-  var title = "Test menu item";
+  var title = "Download with uTorrent";
   var id = chrome.contextMenus.create({"title": title, "contexts":["link"],
-                                       "onclick": genericOnClick});
+                                       "onclick": download});
 
 
