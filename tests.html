@@ -1,8 +1,30 @@
 <html>
 	<head>
 		<title>ChromeTorrent tests</title>
+		<link rel="stylesheet" href="qunit.css" type="text/css" media="screen" charset="utf-8">
+		<script type="text/javascript" charset="utf-8" src="jquery-1.5.min.js">
+			
+		</script>
+		<script type="text/javascript" charset="utf-8" src="qunit.js">
+			
+		</script>
+		<script type="text/javascript" charset="utf-8">
+			$().ready(function() 
+					{
+					test("first test", function() {
+						ok(true, "test2");
+						});
+					});	
+		</script>
 	</head>
 	<body>
+  <h1 id="qunit-header">Chrometorrent tests</h1>
+ <h2 id="qunit-banner"></h2>
+ <div id="qunit-testrunner-toolbar"></div>
+ <h2 id="qunit-userAgent"></h2>
+ <ol id="qunit-tests"></ol>
+ <div id="qunit-fixture">test markup, will be hidden</div>
+		
 	</body>
 </html>
 	
