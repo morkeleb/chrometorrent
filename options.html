@@ -14,7 +14,7 @@ function save_options() {
   localStorage["host"] = host;
   localStorage["user"] = user;
   localStorage["pass"] = pass;
-  document.getElementById("status").innerHTML = "saved";
+  document.getElementById("status").innerHTML = "saved, you need to restart chrome for the changes to take effect";
 }
 
 // Restores select box state to saved value from localStorage.
@@ -33,6 +33,7 @@ function restore_options() {
 <body onload="restore_options()">
 
 	<h1>
+		<img src="chrometorrent128.png" align="middle" alt="chromeTorrent"/>
 		Welcome To ChromeTorrent
 	</h1>
 	<p>Please specify the options to connect to your uTorrent web-gui.</p>
