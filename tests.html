@@ -8,13 +8,44 @@
 		<script type="text/javascript" charset="utf-8" src="qunit.js">
 			
 		</script>
+		<script type="text/javascript" charset="utf-8" src="chrometorrent.js">
+			
+		</script>
 		<script type="text/javascript" charset="utf-8">
 			$().ready(function() 
 					{
-					test("first test", function() {
-						ok(true, "test2");
+					test("When a ChromeTorrent is created ", function() {
+									$.ajax = function(settings) {
+settings.success("<html><div id='token' style='display:none;'>fakeToken</div></html>", 200);
+									};
+						var torrent = new ChromeTorrent("host", "user", "password");
+						ok(torrent != null, "it is initialized without error");
+						equals(torrent.getUser(), "user", "it has a user");
+						equals(torrent.getHost(), "host", "it has a host");
+						equals(torrent.getPassword(), "password", "it has a password");
+						equals(torrent.getToken(), "fakeToken", "it fetches a torrent from the host");
 						});
-					});	
+
+					});
+test("A ChromeTorrent can", function() {
+									$.ajax = function(settings) {
+settings.success("<html><div id='token' style='display:none;'>fakeToken</div></html>", 200);
+									};
+						var torrent = new ChromeTorrent("host", "user", "password");
+						equals(torrent.createDownloadUrlForTorrent("torrent"), "host?token=fakeToken&action=add-url&s=torrent", "construct the url for starting a download for a torrent" );
+						var getUrl = "";
+						var password = "";
+						var username = "";
+						$.ajax = function(settings) {
+						getUrl = settings.url;
+						password = settings.password;
+						username = settings.username;
+						};
+						torrent.addTorrent("myTorrent");
+						equals(getUrl, "host?token=fakeToken&action=add-url&s=myTorrent", "add a torrent to the downloads");
+						equals(password, "password", "on a password protected host");
+						equals(username, "user", "with the given user");
+													});
 		</script>
 	</head>
 	<body>
