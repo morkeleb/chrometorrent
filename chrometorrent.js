@@ -1,4 +1,3 @@
-
 function ChromeTorrent(host, username, password) {
 	var self = this;
 
@@ -8,9 +7,6 @@ function ChromeTorrent(host, username, password) {
 	token = $(data).first().first().html();},
 		username:username, password:password});
 
-	$.get(host + "token.html", function(data){
-	token = $(data).first().first().html();});
-	
 	this.getUser = function() {
 					return username;
 	};
