@@ -10,11 +10,18 @@ function save_options() {
   var host = document.getElementById("host").value;
   var user = document.getElementById("user").value;
   var pass = document.getElementById("password").value;
+  
+  //ensure trailing slash
+  if( host.charAt( host.length - 1 ) !== "/" )
+	host = host + "/";
 
   localStorage["host"] = host;
   localStorage["user"] = user;
   localStorage["pass"] = pass;
+  
   document.getElementById("status").innerHTML = "saved";
+  
+  restore_options();
 }
 
 // Restores select box state to saved value from localStorage.
