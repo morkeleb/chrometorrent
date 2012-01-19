@@ -1,12 +1,42 @@
-function ChromeTorrent(host, username, password) {
+function ChromeTorrent() {
+
+// Fields
 	var self = this;
+	var host = "";
+	var username = "";
+	var password = "";
+	var token = "";
 
-	var token = "tt";
+// Private methods
+	var resetToken = function( callback ) {
+		$.ajax( {
+			url:      host + "token.html",
+			success:  function(data) { token = $(data).first().first().html(); if( callback !== undefined ) callback(); },
+			username: username,
+			password: password
+		});
+	};
+	
+	var hasStorageChanged = function() {
+		return localStorage["host"] !== host || localStorage["user"] !== username || localStorage["pass"] !== password;
+	};
 
-	$.ajax({url:host + "token.html", success:function(data) {
-	token = $(data).first().first().html();},
-		username:username, password:password});
+	var refetchStorage = function() {
+		host = localStorage["host"];
+		username = localStorage["user"];
+		password = localStorage["pass"];
+	};
+	
+	var postTorrent = function(torrent) {
+		$.ajax( {
+			url:      self.createDownloadUrlForTorrent(torrent),
+			username: self.getUser(),
+			password: self.getPassword()
+		});
 
+	};
+
+// Public methods
 	this.getUser = function() {
 					return username;
 	};
@@ -21,25 +51,30 @@ function ChromeTorrent(host, username, password) {
 	};
 	
 	this.createDownloadUrlForTorrent =  function (url) {
-	return self.getHost() + "?token=" + self.getToken() + "&action=add-url&s=" + escape(url);
+		return self.getHost() + "?token=" + self.getToken() + "&action=add-url&s=" + escape(url);
+	};
+
+	this.addTorrent = function(torrentUrl) {
+		if( !hasStorageChanged() ) {
+			// quick way
+			postTorrent(torrentUrl);
+		} else {
+			//slow way, redo token thing
+			refetchStorage();
+			resetToken( function(){ postTorrent(torrentUrl) } );
+		}
+	};
 }
 
-	this.addTorrent = function(torrentUrl){
-					$.ajax({url:self.createDownloadUrlForTorrent(torrentUrl),
-									username:self.getUser(),
-									password:self.getPassword()});
-	};
-};
 
-
-var myTorrent = new ChromeTorrent(localStorage["host"], localStorage["user"], localStorage["pass"]);
+var myTorrent = new ChromeTorrent();
 
 function download(info, tab) {
   myTorrent.addTorrent(info.linkUrl);
   console.log("item " + info.linkUrl + " was clicked");
 }
 
-  var title = "Download with uTorrent";
+  var title = "Send to uTorrent";
   var id = chrome.contextMenus.create({"title": title, "contexts":["link"],
                                        "onclick": download});
 

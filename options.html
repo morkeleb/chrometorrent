@@ -14,7 +14,7 @@ function save_options() {
   localStorage["host"] = host;
   localStorage["user"] = user;
   localStorage["pass"] = pass;
-  document.getElementById("status").innerHTML = "saved, you need to restart chrome for the changes to take effect";
+  document.getElementById("status").innerHTML = "saved";
 }
 
 // Restores select box state to saved value from localStorage.
@@ -51,7 +51,7 @@ function restore_options() {
 		<tr>
 			<td>Password</td>
 			<td><input type="password" id="password"/></td>
-			<td>example: supersecterpassword</td>
+			<td>example: supersecretpassword</td>
 		</tr>
 	</table>
 
