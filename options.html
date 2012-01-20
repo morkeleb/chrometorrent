@@ -1,9 +1,24 @@
+<!doctype html>
 <html>
 	<head>
 		<title>ChromeTorrent - options</title>
 	</head>
 
 <script type="text/javascript">
+	
+function refreshLog() {
+	var logdiv = document.getElementById("log");
+	logdiv.innerHTML = "";
+	var logdata = localStorage["logdata"];
+	if( logdata !== undefined ){
+		var log = JSON.parse( logdata );
+		for( var label in log ){
+			if( log.hasOwnProperty(label) ) {
+				logdiv.innerHTML += "<p>"+log[label]+"</p>";
+			}
+		}
+	}
+}
 
 // Saves options to localStorage.
 function save_options() {
@@ -37,7 +52,7 @@ function restore_options() {
 
 </script>
 
-<body onload="restore_options()">
+<body onload="restore_options();">
 
 	<h1>
 		<img src="chrometorrent128.png" align="middle" alt="chromeTorrent"/>
@@ -65,6 +80,8 @@ function restore_options() {
 <button onclick="save_options()">Save</button>
 <div id="status"></div>
 
+<input type="button" value="Refresh log" onclick="refreshLog()" />
+<div id="log"></div>
 
+</body>
 </html>
-			
