@@ -1,4 +1,4 @@
-function ChromeTorrent() {
+function ChromeTorrent( log ) {
 
 // Fields
 	var self = this;
@@ -15,7 +15,7 @@ function ChromeTorrent() {
 			username: username,
 			password: password,
 			error: function( xhr,status,e){
-				throw { message: "when fetching api token. encountered " +status+e};
+				log.addError("when fetching api token. encountered " +status+e);
 			}
 		});
 	};
@@ -35,7 +35,7 @@ function ChromeTorrent() {
 			url:      self.createDownloadUrlForTorrent(torrent),
 			username: self.getUser(),
 			password: self.getPassword(),
-			error: function(xhr,status,e){ throw {message:"when posting torrent. encountered "+status+e};}
+			error: function(xhr,status,e){ log.addError("when posting torrent. encountered "+status+e);}
 
 		});
 
@@ -110,21 +110,16 @@ function makeLog() {
 	};
 };
 
-var myTorrent = new ChromeTorrent();
 var myLog = makeLog();
+var myTorrent = new ChromeTorrent( myLog );
 
 function download(info, tab) {
-try
-{
+
   myTorrent.addTorrent(info.linkUrl);
   console.log("item " + info.linkUrl + " was clicked");
   myLog.addInfo( "clicked: " + info.linkUrl );
-}
-catch(e)
-{
-	myLog.addError( e.message );
-}
-}
+
+  }
 
   var title = "Send to uTorrent";
   var id = chrome.contextMenus.create({"title": title, "contexts":["link"],
