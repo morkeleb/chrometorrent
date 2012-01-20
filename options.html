@@ -1,20 +1,47 @@
+<!doctype html>
 <html>
 	<head>
 		<title>ChromeTorrent - options</title>
 	</head>
 
 <script type="text/javascript">
+	
+function refreshLog() {
+	var logdiv = document.getElementById("log");
+	logdiv.innerHTML = "";
+	var logdata = localStorage["logdata"];
+	if( logdata !== undefined ){
+		var log = JSON.parse( logdata );
+		for( var label in log ){
+			if( log.hasOwnProperty(label) ) {
+				logdiv.innerHTML += "<p>"+log[label]+"</p>";
+			}
+		}
+	}
+}
+
+function clearLog() {
+	document.getElementById("log").innerHTML = "";
+	localStorage["logdata"] = "";
+}
 
 // Saves options to localStorage.
 function save_options() {
   var host = document.getElementById("host").value;
   var user = document.getElementById("user").value;
   var pass = document.getElementById("password").value;
+  
+  //ensure trailing slash
+  if( host.charAt( host.length - 1 ) !== "/" )
+	host = host + "/";
 
   localStorage["host"] = host;
   localStorage["user"] = user;
   localStorage["pass"] = pass;
-  document.getElementById("status").innerHTML = "saved, you need to restart chrome for the changes to take effect";
+  
+  document.getElementById("status").innerHTML = "saved";
+  
+  restore_options();
 }
 
 // Restores select box state to saved value from localStorage.
@@ -51,13 +78,16 @@ function restore_options() {
 		<tr>
 			<td>Password</td>
 			<td><input type="password" id="password"/></td>
-			<td>example: supersecterpassword</td>
+			<td>example: supersecretpassword</td>
 		</tr>
 	</table>
 
 <button onclick="save_options()">Save</button>
 <div id="status"></div>
 
+<input type="button" value="Refresh log" onclick="refreshLog()" />
+<div id="log"></div>
+<input type="button" value="Clear log" onclick="clearLog()" />
 
+</body>
 </html>
-			
