@@ -103,7 +103,7 @@ function makeLog() {
 		},
 		get: function() {
 			var storedlog = localStorage[loglabel];
-			if(storedlog === undefined || storedlog === null )
+			if( storedlog === undefined || storedlog === null || storedlog === "" )
 				return [];
 			return JSON.parse( storedlog )
 		}
@@ -113,11 +113,15 @@ function makeLog() {
 var myLog = makeLog();
 var myTorrent = new ChromeTorrent( myLog );
 
+function linkify( url ) {
+	return "<a href=\""+url+"\">"+url+"</a>";
+};
+
 function download(info, tab) {
 
   myTorrent.addTorrent(info.linkUrl);
   console.log("item " + info.linkUrl + " was clicked");
-  myLog.addInfo( "clicked: " + info.linkUrl );
+  myLog.addInfo( "clicked: " + linkify(info.linkUrl) );
 
   }
 

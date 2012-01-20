@@ -20,6 +20,11 @@ function refreshLog() {
 	}
 }
 
+function clearLog() {
+	document.getElementById("log").innerHTML = "";
+	localStorage["logdata"] = "";
+}
+
 // Saves options to localStorage.
 function save_options() {
   var host = document.getElementById("host").value;
@@ -52,7 +57,7 @@ function restore_options() {
 
 </script>
 
-<body onload="restore_options();">
+<body onload="restore_options()">
 
 	<h1>
 		<img src="chrometorrent128.png" align="middle" alt="chromeTorrent"/>
@@ -82,6 +87,7 @@ function restore_options() {
 
 <input type="button" value="Refresh log" onclick="refreshLog()" />
 <div id="log"></div>
+<input type="button" value="Clear log" onclick="clearLog()" />
 
 </body>
 </html>
