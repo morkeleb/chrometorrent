@@ -18,7 +18,9 @@
 									$.ajax = function(settings) {
 settings.success("<html><div id='token' style='display:none;'>fakeToken</div></html>", 200);
 									};
-						var torrent = new ChromeTorrent("host", "user", "password");
+									var l = makeLog();
+						var torrent = new ChromeTorrent(l);
+						torrent.addTorrent("");
 						ok(torrent != null, "it is initialized without error");
 						equals(torrent.getUser(), "user", "it has a user");
 						equals(torrent.getHost(), "host", "it has a host");
