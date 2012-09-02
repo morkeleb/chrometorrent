@@ -35,8 +35,8 @@ function ChromeTorrent( log ) {
 			url:      self.createDownloadUrlForTorrent(torrent),
 			username: self.getUser(),
 			password: self.getPassword(),
-			error: function(xhr,status,e){ log.addError("when posting torrent. encountered "+status+e);}
-
+			error: function(xhr,status,e){ log.addError("when posting torrent. encountered "+status+e);},
+			success: function(){}
 		});
 
 	};
