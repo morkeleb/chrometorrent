@@ -3,65 +3,10 @@
 	<head>
 		<title>ChromeTorrent - options</title>
 	</head>
-
-<script type="text/javascript">
-	
-function refreshLog() {
-	var logdiv = document.getElementById("log");
-	logdiv.innerHTML = "";
-	var logdata = localStorage["logdata"];
-	if( logdata !== undefined ){
-		var log = JSON.parse( logdata );
-		for( var label in log ){
-			if( log.hasOwnProperty(label) ) {
-				logdiv.innerHTML += "<p>"+log[label]+"</p>";
-			}
-		}
-	}
-}
-
-function clearLog() {
-	document.getElementById("log").innerHTML = "";
-	localStorage["logdata"] = "";
-}
-
-// Saves options to localStorage.
-function save_options() {
-  var host = document.getElementById("host").value;
-  var user = document.getElementById("user").value;
-  var pass = document.getElementById("password").value;
-  
-  //ensure trailing slash
-  if( host.charAt( host.length - 1 ) !== "/" )
-	host = host + "/";
-
-  localStorage["host"] = host;
-  localStorage["user"] = user;
-  localStorage["pass"] = pass;
-  
-  document.getElementById("status").innerHTML = "saved";
-  
-  restore_options();
-}
-
-// Restores select box state to saved value from localStorage.
-function restore_options() {
-  var host = localStorage["host"];
-  var user = localStorage["user"];
-  var pass = localStorage["pass"];
-  
-  document.getElementById("host").value = host;
-  document.getElementById("user").value = user;
-  document.getElementById("password").value = pass;
-}
-
-</script>
-
-<body onload="restore_options()">
-
+<script type="text/javascript" src="options.js"></script>
+<body>
 	<h1>
-		<img src="chrometorrent128.png" align="middle" alt="chromeTorrent"/>
-		Welcome To ChromeTorrent
+		<img src="chrometorrent128.png" align="middle" alt="chromeTorrent"/> Welcome To ChromeTorrent
 	</h1>
 	<p>Please specify the options to connect to your uTorrent web-gui.</p>
 	<table>
@@ -82,12 +27,10 @@ function restore_options() {
 		</tr>
 	</table>
 
-<button onclick="save_options()">Save</button>
+<button id="save_options">Save</button>
 <div id="status"></div>
-
-<input type="button" value="Refresh log" onclick="refreshLog()" />
+<input type="button" id="refresh_log" value="Refresh log" />
 <div id="log"></div>
-<input type="button" value="Clear log" onclick="clearLog()" />
-
+<input type="button" id="clear_log" value="Clear log" />
 </body>
 </html>
